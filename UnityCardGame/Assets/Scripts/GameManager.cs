@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -59,6 +60,8 @@ public class GameManager : MonoBehaviour
     public AudioClip soundWin;      // 獲勝
     public AudioClip soundLose;     // 失敗
     public AudioClip soundTie;      // 平手
+    public Text WL; //勝負判定
+    public GameObject Ending; //結束畫面
 
     private AudioSource aud;        // 音效來源：喇叭
 
@@ -71,7 +74,28 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void GameWinner()
     {
-        
+        if (pc > player)
+        {
+            Ending.SetActive(true);
+            WL.text = "可惡居然輸了";
+            aud.PlayOneShot(soundLose);
+        }
+        else if (pc == player)
+        {
+            Ending.SetActive(true);
+            WL.text = "平手了";
+            aud.PlayOneShot(soundTie);
+        }
+        else if (pc < player)
+        {
+            Ending.SetActive(true);
+            WL.text = "你贏了!!";
+            aud.PlayOneShot(soundWin);
+        }
+    }
+    public void Replay()
+    {
+        SceneManager.LoadScene("練習場景");
     }
     #endregion
 }
